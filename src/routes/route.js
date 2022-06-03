@@ -1,7 +1,9 @@
 const express = require('express');
+const req = require('express/lib/request');
+const res = require('express/lib/response');
 const { size } = require('lodash');
 //const externalModule = require('../logger/logger')
-const_ = require('lodash');
+const _ = require('lodash');
 
 
 
@@ -44,5 +46,36 @@ router.get('/hello', function (req, res) {
     res.send('hello there!')
 });
 
+router.get('/movies',function (req, res) {
+    let cinema =['Rang de basanti','The shining','Lord of the rings','Batman begins']
+    res.send(cinema)
+})
+router.get('/movies/:inddexNumber' , function(req,res){
+    let movies = ['Rang de basanti', 'The shining' , 'Lord of the rings',  'Batman begins']
+    let displayMoive
+    if(req.params.inddexNumber < movies.length){
+        displayMoive = movies[req.params.inddexNumber]
+    }else{
+        displayMoive = "use a valid index number"
+    }
+    
+    res.send(displayMoive)
+})
+router.get('/films', function(req,res){
+    const films =  [ {
+          "id": 1,
+          "name": "The Shining"
+         }, {
+          "id": 2,
+          "name": "Incendies"
+         }, {
+          "id": 3,
+          "name": "Rang de Basanti"
+         }, {
+          "id": 4,
+          "name": "Finding Nemo"
+         }]
+      res.send(films)      
+  })
 module.exports = router;
 // adding this comment for no reason
