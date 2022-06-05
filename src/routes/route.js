@@ -61,21 +61,84 @@ router.get('/movies/:inddexNumber' , function(req,res){
     
     res.send(displayMoive)
 })
+
 router.get('/films', function(req,res){
+  const films =  [ {
+        "id": 1,
+        "name": "The Shining"
+       }, {
+        "id": 2,
+        "name": "Incendies"
+       }, {
+        "id": 3,
+        "name": "Rang de Basanti"
+       }, {
+        "id": 4,
+        "name": "Finding Nemo"
+       }]
+    res.send(films)      
+})
+
+router.get('/films/:filmId', function(req,res){
     const films =  [ {
-          "id": 1,
-          "name": "The Shining"
-         }, {
-          "id": 2,
-          "name": "Incendies"
-         }, {
-          "id": 3,
-          "name": "Rang de Basanti"
-         }, {
-          "id": 4,
-          "name": "Finding Nemo"
-         }]
-      res.send(films)      
-  })
+        "id": 1,
+        "name": "The Shining"
+       }, {
+        "id": 2,
+        "name": "Incendies"
+       }, {
+        "id": 3,
+        "name": "Rang de Basanti"
+       }, {
+        "id": 4,
+        "name": "Finding Nemo"
+       }]
+    let displayingFilm
+    if(req.params.filmId <= films.length && req.params.filmId != 0){
+        for(index = 0; index< films.length; index++){
+            if(req.params.filmId == films[index].id){
+                displayingFilm = films[index].name
+                break
+            }
+        }
+    }else{
+        displayingFilm = "no film at this index"
+    }
+    
+
+    res.send(displayingFilm)
+})
+//Write a POST /players api that saves a player’s details and doesn’t allow saving the data of a player with a name that already exists in the data
+
+
+let players = []
+
+router.post('/players', function (req, res) {
+    
+    let newPlayer = req.body
+    let newPlayersName = newPlayer.name
+    let isNameRepeated = false
+
+    //let player = players.find(p => p.name == newPlayersName)
+
+    for(let i = 0; i < players.length; i++) {
+        if(players[i].name == newPlayersName) {
+            isNameRepeated = true;
+            break;
+        }
+    }
+
+    //undefined is same as false/ a falsy value
+    if (isNameRepeated) {
+        //Player exists
+        res.send("This player was already added!")
+    } else {
+        //New entry
+        players.push(newPlayer)
+        res.send(players)
+    }
+});
+
+
 module.exports = router;
 // adding this comment for no reason
