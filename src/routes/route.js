@@ -1,14 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
-const mainController= require("../controllers/mainController")
+const userController= require("../controllers/userController")
+const productController = require("../controllers/productController")
+const orderController= require("../controllers/orderController")
+const commonMW = require("../middlewares/commonMiddlewares")
 
 
-router.get("/about", mainController.about)
-router.get("/login",mainController.login)
-router.get("/view",mainController.view)
+router.get("/test-me", function (req, res) {
+    res.send("My first ever api!")
+})
 
 
 
+router.post("/createOrder", commonMW.md2, orderController.createOrder)
 
-module.exports = router;
+router.post("/createproduct", productController.createproduct)
+
+router.post("/createUser",userController.createUser)
+
+
+
